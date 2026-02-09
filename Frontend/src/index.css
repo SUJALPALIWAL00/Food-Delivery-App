@@ -22,7 +22,7 @@
   }
 }
 
-/* For smooth of page  */
+/* For smooth scroll of page  */
 *{
   scroll-behavior: smooth;
 }

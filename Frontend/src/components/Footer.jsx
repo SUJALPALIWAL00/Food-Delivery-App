@@ -10,25 +10,25 @@ const Footer = () => {
                     <Link to="/"><img src={assets.logo} alt="" className='w-[130px]' /></Link>
                     <p >Freshly prepared with quality ingredients — delivered hot to your door. Enjoy food the way it should be.</p>
                     <div className="socialMediaIcons flex gap-2.5">
-                        <a href=""><img src={assets.facebook_icon} alt="" /></a>
-                        <a href=""><img src={assets.twitter_icon} alt="" /></a>
-                        <a href=""><img src={assets.linkedin_icon} alt="" /></a>
+                        <a href=""  ><img src={assets.facebook_icon} alt="" /></a>
+                        <a href=""  ><img src={assets.twitter_icon} alt="" /></a>
+                        <a href=""  ><img src={assets.linkedin_icon} alt="" /></a>
                     </div>
                 </div>
                 <div className="footerCenter md:w-[25%] ">
                     <h2 className='font-bold text-[18px]' >COMPANY</h2>
                     <ul className='mt-3' >
-                        <li>Home</li>
-                        <li>AboutUs</li>
-                        <li>Delivery</li>
-                        <li>Privacy Policy</li>
+                        <li className='cursor-pointer hover:underline' >Home</li>
+                        <li className='cursor-pointer hover:underline' >AboutUs</li>
+                        <li className='cursor-pointer hover:underline' >Delivery</li>
+                        <li className='cursor-pointer hover:underline' >Privacy Policy</li>
                     </ul>
                 </div>
                 <div className="footerRight md:w-[25%]">
                     <h2 className='font-bold text-[18px]' >GET IN TOUCH</h2>
                     <ul className='mt-3' >
-                        <li>+91-9876543210</li>
-                        <li>contact@tomato.com</li>
+                        <li className='cursor-pointer hover:underline' ><a target='_blank' href="tel:9876543210">+91-9876543210</a></li>
+                        <li className='cursor-pointer hover:underline' ><a target='_blank' href="mailto:contact@tomato.com">contact@tomato.com</a></li>
                     </ul>
                 </div>
             </div>

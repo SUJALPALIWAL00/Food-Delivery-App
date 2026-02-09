@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
 
-  const { cartItem, food_list, removeFromCart, addToCart, getTotalCartAmount } = useContext(StoreContext);
+  const { cartItem, food_list, removeFromCart, addToCart, getTotalCartAmount, backendurl } = useContext(StoreContext);
   const navigate = useNavigate();
 
 
@@ -28,7 +28,7 @@ const Cart = () => {
         if (cartItem[item._id] > 0) {
           return (
             <div className=' grid grid-cols-6 gap-5 text-center mb-2 '>
-              <img src={item.image} alt="" className='h-10 w-10 rounded-full mx-auto ' />
+              <img src={backendurl+"/images/"+item.image} alt="" className='h-10 w-10 rounded-full mx-auto ' />
               <p>{item.name}</p>
               <p>₹{item.price}</p>
               <p>{cartItem[item._id]}</p>
