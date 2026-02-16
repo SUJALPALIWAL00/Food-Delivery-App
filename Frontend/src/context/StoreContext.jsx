@@ -6,22 +6,29 @@ export const StoreContext = createContext(null)
 const StoreContextProvider = (props) => {
     const [token, setToken] = useState("")
     const [showDropDown, setShowDropDown] = useState(false)
-    const [cartItem, setcartItem] = useState({})
+    const [cartItem, setCartItem] = useState({})
     const backendurl = "http://localhost:4000"
     const [food_list, setFoodList] = useState([])
 
-    const addToCart = (id) => {
-        if (!cartItem[id]) {
-            setcartItem((prev) => ({ ...prev, [id]: 1 }))
+    const addToCart = async (itemId) => {
+        if (!cartItem[itemId]) {
+            setCartItem((prev) => ({ ...prev, [itemId]: 1 }))
         }
         else {
-            setcartItem((prev) => ({ ...prev, [id]: prev[id] + 1 }))
+            setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }))
+        }
+        if (token) {
+            await axios.post(backendurl + "/api/cart/add", { itemId }, { headers: { token } })
         }
     }
 
-    const removeFromCart = (id) => {
-        setcartItem((prev) => ({ ...prev, [id]: prev[id] - 1 }))
+    const removeFromCart = async (itemId) => {
+        setCartItem((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }))
+        if (token) {
+            await axios.post(backendurl + "/api/cart/remove", { itemId }, { headers: { token } })
+        }
     }
+
 
     // Fx for getting food data for food cards from the backend
     const fetchFoodItem = async () => {
@@ -29,13 +36,21 @@ const StoreContextProvider = (props) => {
         setFoodList(respone.data.data)
     }
 
+
+    // fx for loading user's card items when reloaded/relogin if added to cart before
+    const loadCartData = async (token) => {
+        const response = await axios.post(backendurl + "/api/cart/get", {}, { headers: { token } })
+        setCartItem(response.data.cartData)
+    }
+
     // To remain loggedin when page getting reloaded
     useEffect(() => {
-        if (localStorage.getItem("token")) {
-            setToken(localStorage.getItem("token"))
-        }
         async function loadData() {
             await fetchFoodItem()
+            if (localStorage.getItem("token")) {
+                setToken(localStorage.getItem("token"))
+                loadCartData(localStorage.getItem("token"))   //for loading user's cart data when user is logged in
+            }
         }
         loadData()
     }, [])
@@ -46,7 +61,8 @@ const StoreContextProvider = (props) => {
 
         for (const key in cartItem) {
             if (cartItem[key] > 0) {
-                let itemInfo = food_list.find((product) => product._id === key)
+                // let itemInfo = axios.get(backendurl+"/api/food/get")
+                let itemInfo = food_list.find((product) => product._id === key)  // It may be wrong above line is correct
                 totalAmount += cartItem[key] * itemInfo.price;
             }
 
